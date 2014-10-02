@@ -1,0 +1,27 @@
+{
+  diners: [
+    {name: "Eugene"},
+    {name: "Tom"},
+    {name: "Joanne"},
+    {name: "Lucy"}
+  ]
+  items: [
+    {
+      name: "Falafel",
+      value: 9.95
+    },
+    {
+      name: "Chicken Shwarma",
+      value: 11.95
+    },
+    {
+      name: "Pita and Hummus",
+      value: 4.95
+    }
+  ]
+  discount: {
+    cost: 6.00,
+    value: 50.00,
+    minimum: 100.00
+  }
+}

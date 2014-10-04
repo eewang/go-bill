@@ -33,6 +33,7 @@ type Diner struct {
 }
 
 type Bill struct {
+  restaurant string
   discount Discount
   items []*Item
   diners []*Diner
@@ -108,7 +109,7 @@ func main() {
   item_3 := Item{name: "Salad", value: 3.95, purchasers: []*Diner{&eugene}}
 
   discount := Discount{cost: 6.00, value: 50.00, minimum: 100.00}
-  bill := Bill{discount: discount}
+  bill := Bill{restaurant: "AOC", discount: discount}
 
   bill.addItem(&item_1)
   bill.addItem(&item_2)
@@ -127,6 +128,7 @@ func main() {
   // Routing
   r := mux.NewRouter()
   r.HandleFunc("/", rootHandler)
+  r.HandleFunc("/inputBill", billHandler)
   http.Handle("/", r)
 
   address := fmt.Sprintf("%s:%d", *host, *port)

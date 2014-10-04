@@ -2,10 +2,19 @@ package main
 
 import (
   "fmt"
+  "net/http"
+  "flag"
+
+  "github.com/gorilla/mux"
 )
 
 const taxRate float32 = 0.075
 const tipRate float32 = 0.20
+
+var (
+  host = flag.String("host", "127.0.0.1", "the host to listen on")
+  port = flag.Int("port", 8000, "the port to listen on")
+)
 
 type Item struct {
   name string
@@ -114,4 +123,17 @@ func main() {
   fmt.Printf("Tip is %v\n", bill.tip())
   fmt.Printf("Total is %v\n", bill.total())
   fmt.Printf("Discount was applied: %v\n", bill.discountApplied())
+
+  // Routing
+  r := mux.NewRouter()
+  r.HandleFunc("/", rootHandler)
+  http.Handle("/", r)
+
+  address := fmt.Sprintf("%s:%d", *host, *port)
+  fmt.Printf("Listening on http://%s\n", address)
+  listenErr := http.ListenAndServe(address, nil)
+
+  if listenErr != nil {
+    panic(listenErr)
+  }
 }
